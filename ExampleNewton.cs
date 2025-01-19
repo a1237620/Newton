@@ -40,7 +40,7 @@ namespace Newton
                 //точки экстремума (мин,макс)
                 var list = EquationHelper.GetPointsExtremum(mathEquation);
 
-                if (list?.Any() == true)
+                if (list!=null && list.Any())
                 {
                     for (int i = 0; i < list.Count; i++)
                     {
@@ -97,7 +97,7 @@ namespace Newton
                 //критерий остановки вычислений по приращению
                 if (Math.Abs(x1 - x0) < epsilon)
                 {
-                    //сработал остановки останова вычислений по приращению
+                    //сработал критерий остановки  вычислений по приращению
                     Console.WriteLine("Сработал критерий остановки вычислений по приращению");
                     return true;
                 }

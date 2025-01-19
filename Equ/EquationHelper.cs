@@ -10,7 +10,7 @@
         /// <returns></returns>
         internal static double GetFx(double x, IList<EquationItem> list)
         {
-            if (list?.Count == 0) return 0;
+            if (list==null || list.Count == 0) return 0;
 
             double fx = 0;
             foreach (var item in list)
@@ -33,7 +33,7 @@
             b = 0;
             c = 0;
             //исследуем выражение
-            if (derivativeList?.Any() == false) return false;
+            if (derivativeList==null || derivativeList.Count == 0) return false;
 
             var argA = derivativeList?.FirstOrDefault(a => a.Power == 2);
 
@@ -63,6 +63,7 @@
         /// <param name="x2"></param>
         /// <param name="fx1"></param>
         /// <param name="fx2"></param>
+        /// <param name="isZero">решение уравнения f(0)=0</param>
         /// <returns></returns>
         internal static List<PointExt> GetPointsМonotone(IList<EquationItem> derivativeList, double x1, double x2, double fx1, double fx2)
         {
@@ -89,9 +90,11 @@
                         Koef = -1
                     });
                     //TODO 
+                    //Для отрицательного значения функции 
                 }
-                //TODO
             }
+            //TODO исследовать для других участков
+
             return list;
         }
 
