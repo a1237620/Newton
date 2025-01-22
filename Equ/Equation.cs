@@ -58,7 +58,7 @@ namespace Newton.Equ
                 if (item.Power > 0)
                 {
                     //найти производную
-                    derivatives.Add(new EquationItem(factor:item.Factor * item.Power, power: item.Power - 1));
+                    derivatives.Add(new EquationItem(Factor:item.Factor * item.Power, Power: item.Power - 1));
                 }
             }
         }

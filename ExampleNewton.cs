@@ -73,9 +73,9 @@ namespace Newton
             //f(x)=x^3-2x+2
 
             mathEquation = new Equation();
-            mathEquation.Equations.Add(new EquationItem(factor: 1, power: 3));
-            mathEquation.Equations.Add(new EquationItem(factor: -2, power: 1));
-            mathEquation.Equations.Add(new EquationItem(factor: 2, power: 0));
+            mathEquation.Equations.Add(new EquationItem(Factor: 1, Power: 3));
+            mathEquation.Equations.Add(new EquationItem(Factor: -2, Power: 1));
+            mathEquation.Equations.Add(new EquationItem(Factor: 2, Power: 0));
         }
         /// <summary>
         /// Вычисление приближённого значения корня уравнения
