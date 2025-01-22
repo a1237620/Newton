@@ -98,7 +98,7 @@ namespace Newton
                 if (Math.Abs(x1 - x0) < epsilon)
                 {
                     //сработал критерий остановки  вычислений по приращению
-                    Console.WriteLine("Сработал критерий остановки вычислений по приращению");
+                    Console.WriteLine($"Сработал критерий остановки вычислений по приращению e={epsilon}");
                     return true;
                 }
 

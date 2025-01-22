@@ -65,11 +65,13 @@
         /// <param name="fx2"></param>
         /// <param name="isZero">решение уравнения f(0)=0</param>
         /// <returns></returns>
-        internal static List<PointExt> GetPointsМonotone(IList<EquationItem> derivativeList, double x1, double x2, double fx1, double fx2)
+        internal static List<PointExt> GetPointsМonotone(IList<EquationItem> derivativeList, double x1, double x2, double fx1, double fx2 )
         {
             List<PointExt> list = new List<PointExt>();
+            //значение производной для точки x1 ищем, взяв точку меньше x1 на 1
             //точка x∈(−∞;x1)
             double x1d = x1 - 1;
+            //значение производной для точки x2 ищем, взяв точку больше x2 на  1
             //точка x∈(x2;+∞)
             double x2d = x2 + 1;
 
@@ -91,10 +93,65 @@
                     });
                     //TODO 
                     //Для отрицательного значения функции 
+                    if (fx2 < 0)
+                    {
+                        //TODO test
+                        if (Math.Abs(fx1) == Math.Abs(fx2))
+                        {
+                            //- 1ое решение = 3-е решение и 2ое=0
+                          //  isZero = true;
+                        }
+                        else
+                        {
+                            //2ое решение
+                            if (Math.Abs(fx1) > Math.Abs(fx2))
+                            {
+
+                                list.Add(new PointExt
+                                {
+                                    X = x2,
+                                    Koef = -1
+                                });
+                            }
+                            if (Math.Abs(fx1) < Math.Abs(fx2))
+                            {
+                                list.Add(new PointExt
+                                {
+                                    X = x1,
+                                    Koef = 1
+                                });
+                            }
+
+                            //3-е решение
+                            list.Add(new PointExt
+                            {
+                                X = x2,
+                                Koef = 1
+                            });
+                        }
+                    }
                 }
             }
             //TODO исследовать для других участков
-
+            //
+            //var fx0d = GetFx(0, derivativeList);
+            //if (fx0d < 0)
+            //{
+            //    // При x∈(x1; x2) производная y′< 0, функция убывает на данном промежутке.
+            //}
+            //else
+            //{
+            //    //При x∈(x1; x2) производная y′> 0, поэтому функция возрастает на данных промежутках.
+            //}
+            //var fx2d = GetFx(x2d, derivativeList);
+            //if (fx2d > 0)
+            //{
+            //    //При x∈(x2;+∞) производная y′> 0, поэтому функция возрастает на данных промежутках.
+            //    if (fx2 < 0)
+            //    {
+            //        //есть точка пересечения 
+            //    }
+            //}
             return list;
         }
 

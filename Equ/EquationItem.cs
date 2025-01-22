@@ -15,8 +15,14 @@
         /// </summary>
         internal int Power { get; private set; }
 
+        /// <summary>
+        /// Конструктор. 
+        /// </summary>
+        /// <param name="factor"></param>
+        /// <param name="power"></param>
         public EquationItem(double factor, int power)
         {
+            //Инициализация закрытых св-в через конструктор
             Factor = factor;
             Power = power;
         }
