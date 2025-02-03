@@ -1,4 +1,6 @@
-﻿namespace Newton.Equ
+﻿using static Newton.Equ.EquationHelper;
+
+namespace Newton.Equ
 {
     internal class EquationHelper
     {
@@ -10,7 +12,7 @@
         /// <returns></returns>
         internal static double GetFx(double x, IList<EquationItem> list)
         {
-            if (list==null || list.Count == 0) return 0;
+            if (list == null || list.Count == 0) return 0;
 
             double fx = 0;
             foreach (var item in list)
@@ -27,17 +29,16 @@
         /// <param name="b"></param>
         /// <param name="c"></param>
         /// <returns></returns>
-        internal static bool KoefABC(IList<EquationItem> derivativeList, out double a, out double b, out double c)
+        internal static SquareKoeff? KoefABC(IList<EquationItem> derivativeList)
         {
-            a = 0;
-            b = 0;
-            c = 0;
+            double a, b = 0, c = 0;
+
             //исследуем выражение
-            if (derivativeList==null || derivativeList.Count == 0) return false;
+            if (derivativeList == null || derivativeList.Count == 0) return null;
 
             var argA = derivativeList?.FirstOrDefault(a => a.Power == 2);
 
-            if (argA == null) return false;
+            if (argA == null) return null;
 
             a = argA.Factor;
 
@@ -52,8 +53,9 @@
                 c = argC.Factor;
             }
 
-            return true;
+            return new SquareKoeff(A: a, B: b, C: c);
         }
+
 
         /// <summary>
         /// Исследуем функцию на монотонность
@@ -65,7 +67,7 @@
         /// <param name="fx2"></param>
         /// <param name="isZero">решение уравнения f(0)=0</param>
         /// <returns></returns>
-        internal static List<PointExt> GetPointsМonotone(IList<EquationItem> derivativeList, double x1, double x2, double fx1, double fx2 )
+        internal static List<PointExt> GetPointsМonotone(IList<EquationItem> derivativeList, double x1, double x2, double fx1, double fx2)
         {
             List<PointExt> list = new List<PointExt>();
             //значение производной для точки x1 ищем, взяв точку меньше x1 на 1
@@ -86,11 +88,8 @@
                     //т.к. точка экстремума в области отрицательных значений,
                     //отступ для первой точки касательной  делаем в −∞, т.е. Koef = -1 
                     //1-ое решение
-                    list.Add(new PointExt
-                    {
-                        X = x1,
-                        Koef = -1
-                    });
+                    list.Add(new PointExt(x2, 1));
+
                     //TODO 
                     //Для отрицательного значения функции 
                     if (fx2 < 0)
@@ -99,35 +98,19 @@
                         if (Math.Abs(fx1) == Math.Abs(fx2))
                         {
                             //- 1ое решение = 3-е решение и 2ое=0
-                          //  isZero = true;
+                            //  isZero = true;
                         }
                         else
                         {
                             //2ое решение
                             if (Math.Abs(fx1) > Math.Abs(fx2))
-                            {
+                                list.Add(new PointExt(x2, -1));
 
-                                list.Add(new PointExt
-                                {
-                                    X = x2,
-                                    Koef = -1
-                                });
-                            }
                             if (Math.Abs(fx1) < Math.Abs(fx2))
-                            {
-                                list.Add(new PointExt
-                                {
-                                    X = x1,
-                                    Koef = 1
-                                });
-                            }
+                                list.Add(new PointExt(x1, 1));
 
                             //3-е решение
-                            list.Add(new PointExt
-                            {
-                                X = x2,
-                                Koef = 1
-                            });
+                            list.Add(new PointExt(x2, 1));
                         }
                     }
                 }
@@ -164,14 +147,14 @@
         {
             //TODO
             //Исследуем функцию на экстремумы
-            if (!KoefABC(mathEquation.Derivatives, out double a, out double b, out double c))
-                return null;
+            var squareKoeff = KoefABC(mathEquation.Derivatives);
+            if (squareKoeff == null) return null;
 
             //точка перегиба х1
-            double x1 = GetX(a, b, c, -1);
+            double x1 = GetX(squareKoeff.A, squareKoeff.B, squareKoeff.C, -1);
             //точка перегиба х2
 
-            double x2 = GetX(a, b, c);
+            double x2 = GetX(squareKoeff.A, squareKoeff.B, squareKoeff.C);
 
             if (x1 > x2)
             {
@@ -226,16 +209,17 @@
     /// <summary>
     /// Стартовая точка
     /// </summary>
-    internal class PointExt
-    {
-        /// <summary>
-        /// Координата X
-        /// </summary>
-        public double X { get; set; }
-        /// <summary>
-        /// Коэффициент
-        /// </summary>
-        public int Koef { get; set; }
-    }
+    /// <param name="X">Координата X</param>
+    /// <param name="Koef">Коэффициент</param>
+    internal record class PointExt(double X, int Koef);
+
+    /// <summary>
+    /// Коэффициенты квадратного уравнения
+    /// </summary>
+    /// <param name="A">A*x2</param>
+    /// <param name="B">B*x</param>
+    /// <param name="C">C</param>
+    internal record class SquareKoeff(double A, double B, double C);
+
 }
 
