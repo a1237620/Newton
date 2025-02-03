@@ -13,12 +13,12 @@ namespace Newton
         /// <summary>
         /// Макс. кол-во итераций
         /// </summary>
-        private const int maxIteration = 200;
+        public const int MAX_ITERATION = 200;
 
         /// <summary>
         /// Точность нахождения корня, ε 
         /// </summary>
-        private const double epsilon = 0.02;
+        public const double EPSOLON = 0.02;
 
         /// <summary>
         /// Выражение и его производные
@@ -45,7 +45,7 @@ namespace Newton
                     for (int i = 0; i < list.Count; i++)
                     {
                         var item = list[i];
-                        double x = item.X + epsilon * item.Koef;
+                        double x = item.X + EPSOLON * item.Koef;
 
                         if (CalcX(x, out double result))
                         {
@@ -87,7 +87,7 @@ namespace Newton
             //предпоследнее значение X
             double x0last = x0;
             x1 = x0;
-            for (int i = 0; i < maxIteration; i++)
+            for (int i = 0; i < MAX_ITERATION; i++)
             {
                 Console.WriteLine($"{i}. x0={x0} ");
                 Task.Delay(100).Wait();
@@ -95,10 +95,10 @@ namespace Newton
                 x1 = EquationHelper.GetNewtonX(mathEquation, x0);
 
                 //критерий остановки вычислений по приращению
-                if (Math.Abs(x1 - x0) < epsilon)
+                if (Math.Abs(x1 - x0) < EPSOLON)
                 {
                     //сработал критерий остановки  вычислений по приращению
-                    Console.WriteLine($"Сработал критерий остановки вычислений по приращению e={epsilon}");
+                    Console.WriteLine($"Сработал критерий остановки вычислений по приращению e={EPSOLON}");
                     return true;
                 }
 

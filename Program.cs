@@ -9,8 +9,7 @@ internal partial class Program
 {
     private static void Main(string[] args)
     {
-        ExampleNewton exampleNewton = new ExampleNewton();
-        exampleNewton.Calculate();
+        new ExampleNewton().Calculate();
     }
 
 
