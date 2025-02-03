@@ -151,10 +151,10 @@ namespace Newton.Equ
             if (squareKoeff == null) return null;
 
             //точка перегиба х1
-            double x1 = GetX(squareKoeff.A, squareKoeff.B, squareKoeff.C, -1);
+            double x1 = GetX(squareKoeff, -1);
             //точка перегиба х2
 
-            double x2 = GetX(squareKoeff.A, squareKoeff.B, squareKoeff.C);
+            double x2 = GetX(squareKoeff);
 
             if (x1 > x2)
             {
@@ -179,12 +179,12 @@ namespace Newton.Equ
         /// <param name="b"></param>
         /// <param name="c"></param>
         /// <returns></returns>
-        private static double GetX(double a, double b, double c, double koefDiscriminant = 1)
+        private static double GetX(SquareKoeff squareKoeff, double koefDiscriminant = 1)
         {
             //дискриминант
-            double discr = Math.Pow(b, 2) - 4 * a * c;
+            double discr = Math.Pow(squareKoeff.B, 2) - 4 * squareKoeff.A * squareKoeff.C;
 
-            double x = (-b + koefDiscriminant * Math.Sqrt(discr)) / (2 * a);
+            double x = (-squareKoeff.B + koefDiscriminant * Math.Sqrt(discr)) / (2 * squareKoeff.A);
 
             return x;
         }
