@@ -8,7 +8,7 @@ namespace Newton.Equ
 {
     public static class StrExt
     {
-        public static void ToConsole(this string message, ConsoleColor color = ConsoleColor.White)
+        public static void ToConsole(this  string message,  ConsoleColor color = ConsoleColor.White)
         {
             if (!string.IsNullOrWhiteSpace(message))
             {

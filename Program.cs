@@ -11,7 +11,4 @@ internal partial class Program
     {
         new ExampleNewton().Calculate();
     }
-
-
-
 }

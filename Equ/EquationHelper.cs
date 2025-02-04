@@ -30,30 +30,34 @@ namespace Newton.Equ
         /// <param name="b"></param>
         /// <param name="c"></param>
         /// <returns></returns>
-        internal static SquareKoeff? KoefABC(IList<EquationItem> derivativeList)
+        internal static SquareKoeff KoefABC(IList<EquationItem> derivativeList)
         {
-            double a, b = 0, c = 0;
+            double a=0, b = 0, c = 0;
 
             //исследуем выражение
-            if (derivativeList == null || derivativeList.Count == 0) return null;
-
-            var argA = derivativeList?.FirstOrDefault(a => a.Power == 2);
-
-            if (argA == null) return null;
-
-            a = argA.Factor;
-
-            var argB = derivativeList?.FirstOrDefault(a => a.Power == 1);
-            if (argB != null)
+            if (derivativeList != null && derivativeList.Any())
             {
-                b = argB.Factor;
-            }
-            var argC = derivativeList?.FirstOrDefault(a => a.Power == 0);
-            if (argC != null)
-            {
-                c = argC.Factor;
-            }
 
+                var argA = derivativeList?.FirstOrDefault(a => a.Power == 2);
+
+                if (argA != null)
+                {
+
+                    a = argA.Factor;
+
+                    var argB = derivativeList?.FirstOrDefault(a => a.Power == 1);
+                    if (argB != null)
+                    {
+                        b = argB.Factor;
+                    }
+                    var argC = derivativeList?.FirstOrDefault(a => a.Power == 0);
+                    if (argC != null)
+                    {
+                        c = argC.Factor;
+                    }
+                }
+
+            }
             return new SquareKoeff(A: a, B: b, C: c);
         }
 
@@ -149,7 +153,7 @@ namespace Newton.Equ
             //TODO
             //Исследуем функцию на экстремумы
             var squareKoeff = KoefABC(mathEquation.Derivatives);
-            if (squareKoeff == null) return null;
+            if (squareKoeff.A==0) return null;
 
             //точка перегиба х1
             double x1 = GetX(squareKoeff, -1);
@@ -212,7 +216,7 @@ namespace Newton.Equ
     /// </summary>
     /// <param name="X">Координата X</param>
     /// <param name="Koef">Коэффициент</param>
-    internal record class PointExt(double X, int Koef);
+    internal readonly record struct PointExt(double X, int Koef);
 
     /// <summary>
     /// Коэффициенты квадратного уравнения
@@ -220,7 +224,7 @@ namespace Newton.Equ
     /// <param name="A">A*x2</param>
     /// <param name="B">B*x</param>
     /// <param name="C">C</param>
-    internal record class SquareKoeff(double A, double B, double C);
+    internal readonly record  struct SquareKoeff(double A, double B, double C);
 
 }
 
