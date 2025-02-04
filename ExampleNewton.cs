@@ -57,7 +57,7 @@ namespace Newton
                 }
                 else
                 {
-                    $"Решение уравнения не найдено.".ToConsole(ConsoleColor.Red);
+                    "Решение уравнения не найдено.".ToConsole(ConsoleColor.Red);
                 }
             }
             catch (Exception ex)
