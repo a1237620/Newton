@@ -212,7 +212,7 @@ namespace Newton.Equ
     }
 
     /// <summary>
-    /// Стартовая точка
+    /// Стартовая точка 
     /// </summary>
     /// <param name="X">Координата X</param>
     /// <param name="Koef">Коэффициент</param>
