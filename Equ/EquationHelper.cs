@@ -12,12 +12,13 @@ namespace Newton.Equ
         /// <returns></returns>
         internal static double GetFx(double x, IList<EquationItem> list)
         {
-            if (list == null || list.Count == 0) return 0;
-
             double fx = 0;
-            foreach (var item in list)
+            if (list != null && list.Any())
             {
-                fx += item.Factor * Math.Pow(x, item.Power);
+                foreach (var item in list)
+                {
+                    fx += item.Factor * Math.Pow(x, item.Power);
+                }
             }
             return fx;
         }

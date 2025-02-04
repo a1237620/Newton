@@ -36,11 +36,12 @@ namespace Newton
             {
                 CreateEquation();
 
-                Console.WriteLine($"Уравнение {mathEquation}");
+                $"Уравнение {mathEquation}".ToConsole(ConsoleColor.Green);
+                new string('-', 50).ToConsole();
                 //точки экстремума (мин,макс)
                 var list = EquationHelper.GetPointsExtremum(mathEquation);
 
-                if (list!=null && list.Any())
+                if (list != null && list.Any())
                 {
                     for (int i = 0; i < list.Count; i++)
                     {
@@ -49,18 +50,19 @@ namespace Newton
 
                         if (CalcX(x, out double result))
                         {
-                            Console.WriteLine($"Решение уравнения x{i}={result}");
+                            new string('-', 50).ToConsole();
+                            $"Решение уравнения x{i}={result}".ToConsole(ConsoleColor.Green);
                         }
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"Решение уравнения не найдено.");
+                    $"Решение уравнения не найдено.".ToConsole(ConsoleColor.Red);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                ex.Message.ToConsole();
             }
         }
 
@@ -89,7 +91,7 @@ namespace Newton
             x1 = x0;
             for (int i = 0; i < MAX_ITERATION; i++)
             {
-                Console.WriteLine($"{i}. x0={x0} ");
+                $"{i}. x0={x0} ".ToConsole();
                 Task.Delay(100).Wait();
 
                 x1 = EquationHelper.GetNewtonX(mathEquation, x0);
@@ -98,7 +100,7 @@ namespace Newton
                 if (Math.Abs(x1 - x0) < EPSOLON)
                 {
                     //сработал критерий остановки  вычислений по приращению
-                    Console.WriteLine($"Сработал критерий остановки вычислений по приращению e={EPSOLON}");
+                    $"Сработал критерий остановки вычислений по приращению e={EPSOLON}".ToConsole();
                     return true;
                 }
 
@@ -107,21 +109,21 @@ namespace Newton
                 //if (f1 < epsilon)
                 //{
                 //    // выход
-                //    Console.WriteLine("Сработал критерий остановки вычислений на основе близости функции к нулю");
+                //    "Сработал критерий остановки вычислений на основе близости функции к нулю");
                 //    return false;
                 //}
 
                 //Критерий остановки вычислений на основе последних повторений
                 if (x0last == x1)
                 {
-                    Console.WriteLine("Сработал критерий остановки вычислений на основе последних повторений");
+                    "Сработал критерий остановки вычислений на основе последних повторений".ToConsole();
                     return false;
                 }
                 x0last = x0;
                 x0 = x1;
             }
             //сработал критерий остановки вычислений по кол-ву итераций
-            Console.WriteLine("Сработал критерий остановки вычислений по превышению количества итераций");
+            "Сработал критерий остановки вычислений по превышению количества итераций".ToConsole();
             return false;
         }
     }
